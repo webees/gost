@@ -16,10 +16,12 @@ ENV GO111MODULE=on
 
 RUN cd cmd/gost && go env && go build
 
-FROM alpine:latest
+FROM debian:latest
 
 # add iptables for tun/tap
-RUN apk add --no-cache iptables
+RUN apt update && apt install -y --no-install-recommends \
+        iptables \
+        && rm -rf /var/lib/apt/lists/* && apt -y autoremove
 
 WORKDIR /bin/
 
