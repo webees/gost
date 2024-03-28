@@ -6,7 +6,11 @@ COPY --from=tonistiigi/xx:golang / /
 
 ARG TARGETPLATFORM
 
-RUN apk add --no-cache musl-dev git gcc
+RUN apt update && apt install -y --no-install-recommends \
+        musl-dev \
+        git \
+        gcc \
+        && rm -rf /var/lib/apt/lists/* && apt -y autoremove
 
 ADD . /src
 
